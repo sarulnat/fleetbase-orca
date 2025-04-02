@@ -1,0 +1,52 @@
+{
+    "services": [
+      {
+        "name": "fleetbase-api",
+        "source": {
+          "type": "dockerfile",
+          "path": "docker/Dockerfile",
+          "buildContext": ".",
+          "target": "app-dev"
+        },
+        "env": {
+          "APP_KEY": "base64:YOUR_APP_KEY_HERE",
+          "APP_ENV": "production",
+          "LOG_CHANNEL": "stdout",
+          "CACHE_DRIVER": "redis",
+          "QUEUE_CONNECTION": "redis",
+          "CADDYFILE_PATH": "/fleetbase/Caddyfile",
+          "CONSOLE_PATH": "/fleetbase/console",
+          "OCTANE_SERVER": "frankenphp",
+          "PORT": "8000"
+        },
+        "startCommand": null,
+        "port": 8000
+      },
+      {
+        "name": "fleetbase-queue-worker",
+        "source": {
+          "type": "dockerfile",
+          "path": "docker/Dockerfile",
+          "buildContext": ".",
+          "target": "events-dev"
+        },
+        "env": {
+          "APP_ENV": "production",
+          "QUEUE_CONNECTION": "redis"
+        }
+      },
+      {
+        "name": "fleetbase-scheduler",
+        "source": {
+          "type": "dockerfile",
+          "path": "docker/Dockerfile",
+          "buildContext": ".",
+          "target": "scheduler-dev"
+        },
+        "env": {
+          "APP_ENV": "production"
+        }
+      }
+    ]
+  }
+  
